@@ -61,6 +61,7 @@ exports.launch = function(env) {
     var PerlMode = require("ace/mode/perl").Mode;
     var SvgMode = require("ace/mode/svg").Mode;
     var TextileMode = require("ace/mode/textile").Mode;
+    var MarkdownMode = require("ace/mode/markdown").Mode;
     var TextMode = require("ace/mode/text").Mode;
     var UndoManager = require("ace/undomanager").UndoManager;
 
@@ -143,6 +144,10 @@ exports.launch = function(env) {
     docs.textile = new EditSession(document.getElementById("textiletext").innerHTML);
     docs.textile.setMode(new TextileMode());
     docs.textile.setUndoManager(new UndoManager());
+    
+    docs.markdown = new EditSession(document.getElementById("markdowntext").innerHTML);
+    docs.markdown.setMode(new MarkdownMode());
+    docs.markdown.setUndoManager(new UndoManager());
 
     var container = document.getElementById("editor");
     env.editor = new Editor(new Renderer(container, theme));
@@ -150,6 +155,7 @@ exports.launch = function(env) {
     var modes = {
         text: new TextMode(),
         textile: new TextileMode(),
+        markdown: new MarkdownMode(),
         svg: new SvgMode(),
         xml: new XmlMode(),
         html: new HtmlMode(),
@@ -218,6 +224,9 @@ exports.launch = function(env) {
         }
         else if (mode instanceof TextileMode) {
             modeEl.value = "textile";
+        }
+        else if (mode instanceof MarkdownMode) {
+            modeEl.value = "markdown";
         }
         else {
             modeEl.value = "text";
